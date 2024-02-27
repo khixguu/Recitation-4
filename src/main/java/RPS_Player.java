@@ -1,17 +1,22 @@
 import java.util.Random;
 
 public class RPS_Player {
+    private final Random rand = new Random();
+    private final static int ROCK = 0;
+    private final static int SCISSORS = 1;
+    private final static int PAPER = 2;
     private int numberOfGamesWon;
     private int numberOfGamesPlayed;
     private int choice;
     private String name;
 
     public RPS_Player(String name){
-        // TODO: replace this line with your code.
+        this.name = name;
+        clear();
     }
 
     public String getName(){
-        // TODO: replace this line with your code.
+        return name;
     }
 
     /**
@@ -19,7 +24,7 @@ public class RPS_Player {
      * @return returns the number of games played.
      */
     public int getNumberOfGamesPlayed(){
-        // TODO: replace this line with your code.
+        return numberOfGamesPlayed;
     }
 
     /**
@@ -27,7 +32,7 @@ public class RPS_Player {
      * @return returns the number of games won.
      */
     public int getNumberOfGamesWon(){
-        // TODO: replace this line with your code.
+        return numberOfGamesWon;
     }
 
     /**
@@ -35,14 +40,15 @@ public class RPS_Player {
      * @return win percentage as a double.
      */
     public double getWinPercentage(){
-        // TODO: replace this line with your code.
+        return (double)numberOfGamesWon / numberOfGamesPlayed;
     }
 
     /**
      * Starts a new game.
      */
     public void clear(){
-        // TODO: replace this line with your code.
+        numberOfGamesPlayed = 0;
+        numberOfGamesWon = 0;
     }
 
     /**
@@ -53,7 +59,26 @@ public class RPS_Player {
      * @return Reference to the RPS_Player that won or a null if there is a draw
      */
     public RPS_Player challenge(RPS_Player anotherPlayer){
-        // TODO: replace this line with your code.
+        choice = rand.nextInt(3);
+        anotherPlayer.choice = rand.nextInt(3);
+        if(choice != anotherPlayer.choice) {
+            if(choice == ROCK && anotherPlayer.choice == SCISSORS ||
+                choice == PAPER && anotherPlayer.choice == ROCK ||
+                choice == SCISSORS && anotherPlayer.choice == PAPER){
+                numberOfGamesPlayed++;
+                anotherPlayer.numberOfGamesPlayed++;
+                numberOfGamesWon++;
+                return this;
+            } else {
+                numberOfGamesPlayed++;
+                anotherPlayer.numberOfGamesPlayed++;
+                anotherPlayer.numberOfGamesWon++;
+                return anotherPlayer;
+            }
+        }
+        numberOfGamesPlayed++;
+        anotherPlayer.numberOfGamesPlayed++;
+        return null;
     }
 
     /**
@@ -64,7 +89,25 @@ public class RPS_Player {
      * @return Reference to the RPS_Player that won or a null if there is a draw
      */
     public RPS_Player keepAndChallenge(RPS_Player anotherPlayer){
-        // TODO: replace this line with your code.
+        anotherPlayer.choice = rand.nextInt(3);
+        if(choice != anotherPlayer.choice) {
+            if(choice == ROCK && anotherPlayer.choice == SCISSORS ||
+                    choice == PAPER && anotherPlayer.choice == ROCK ||
+                    choice == SCISSORS && anotherPlayer.choice == PAPER){
+                numberOfGamesPlayed++;
+                anotherPlayer.numberOfGamesPlayed++;
+                numberOfGamesWon++;
+                return this;
+            } else {
+                numberOfGamesPlayed++;
+                anotherPlayer.numberOfGamesPlayed++;
+                anotherPlayer.numberOfGamesWon++;
+                return anotherPlayer;
+            }
+        }
+        numberOfGamesPlayed++;
+        anotherPlayer.numberOfGamesPlayed++;
+        return null;
     }
 
 }
